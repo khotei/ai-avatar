@@ -1,0 +1,29 @@
+{
+  "name": "@ai-avatar/gateway",
+  "private": true,
+  "version": "0.0.1",
+  "main": "./dist/index.js",
+  "scripts": {
+    "dev": "tsx watch ./src/main.ts",
+    "start": "node ./dist/main.js",
+    "build": "tsc && tsc-alias",
+    "test": "tsx --test ./**/*.test.ts",
+    "type-check": "tsc -b --noEmit",
+    "lint": "lint",
+    "format": "lint --fix",
+    "clean": "rm -rf ./node_modules && rm -rf ./.turbo && rm -rf ./dist"
+  },
+  "dependencies": {
+    "@ai-avatar/env-config": "*",
+    "@ai-avatar/storage": "*",
+    "@trpc/client": "^11.1.2",
+    "@trpc/server": "^11.1.2",
+    "lodash": "^4.17.16",
+    "zod": "^3.24.4"
+  },
+  "devDependencies": {
+    "@ai-avatar/lint": "*",
+    "@types/lodash": "^4.17.16",
+    "@types/node": "^22.15.17"
+  }
+}

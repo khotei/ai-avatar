@@ -1,0 +1,36 @@
+{
+  "name": "ai-avatar",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=24"
+  },
+  "packageManager": ">=npm@11.0.0",
+  "workspaces": [
+    "app/**",
+    "packages/**"
+  ],
+  "scripts": {
+    "dev": "turbo dev",
+    "start": "turbo start",
+    "build": "turbo build",
+    "dev:gateway": "turbo dev --filter=@ai-avatar/gateway",
+    "build:gateway": "turbo build --filter=@ai-avatar/gateway",
+    "start:gateway": "turbo start --filter=@ai-avatar/gateway",
+    "db:generate": "turbo db:generate --filter=@ai-avatar/storage",
+    "db:migrate": "turbo db:migrate --filter=@ai-avatar/storage",
+    "db:push": "turbo db:push --filter=@ai-avatar/storage",
+    "db:seed": "turbo db:seed --filter=@ai-avatar/storage",
+    "db:clean": "turbo db:clean --filter=@ai-avatar/storage",
+    "db:drop": "turbo db:drop --filter=@ai-avatar/storage",
+    "type-check": "turbo type-check",
+    "lint": "turbo lint",
+    "format": "turbo format",
+    "clean": "turbo clean && rm -rf ./turbo && rm -rf ./node_modules"
+  },
+  "devDependencies": {
+    "tsc-alias": "^1.8.16",
+    "tsx": "^4.19.4",
+    "turbo": "^2.5.3",
+    "typescript": "^5.8.3"
+  }
+}
