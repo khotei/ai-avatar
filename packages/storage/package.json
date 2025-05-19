@@ -1,0 +1,33 @@
+{
+  "name": "@ai-avatar/storage",
+  "version": "0.0.1",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsc && tsc-alias",
+    "dev": "concurrently --kill-others \"tsc -w\" \"tsc-alias -w\"",
+    "test": "tsx --test --test-concurrency=1",
+    "db:generate": "drizzle-kit generate --config=./src/lib/database-config.ts",
+    "db:migrate": "drizzle-kit migrate --config=./src/lib/database-config.ts",
+    "db:push": "drizzle-kit push --config=./src/lib/database-config.ts",
+    "db:seed": "tsx ./src/lib/cli.ts seed",
+    "db:drop": "tsx ./src/lib/cli.ts drop",
+    "db:clean": "tsx ./src/lib/cli.ts clean",
+    "type-check": "tsc -b --noEmit",
+    "lint": "lint",
+    "format": "lint --fix",
+    "clean": "rm -rf ./node_modules && rm -rf ./.turbo && rm -rf ./dist"
+  },
+  "dependencies": {
+    "@ai-avatar/dash": "*",
+    "@ai-avatar/env-config": "*",
+    "@neondatabase/serverless": "^1.0.0",
+    "commander": "^11.1.0",
+    "drizzle-orm": "^0.43.1"
+  },
+  "devDependencies": {
+    "@ai-avatar/lint": "*",
+    "@types/node": "^22.15.17",
+    "drizzle-kit": "^0.31.1",
+    "drizzle-seed": "^0.3.1"
+  }
+}
