@@ -2,13 +2,13 @@ import { deepEqual, equal, ok } from "node:assert/strict"
 import { afterEach, describe, it } from "node:test"
 
 import {
-  ary,
   includes,
   map,
   partition,
   required,
   sample,
   size,
+  unary,
 } from "@ai-avatar/dash"
 
 import {
@@ -19,7 +19,7 @@ import { cleanDatabase } from "@/utils/scripts/seed-database"
 import { createTestAvatarInputs } from "@/utils/test-utils/create-test-avatar-inputs"
 
 describe("find-avatar-inputs-repository", () => {
-  afterEach(ary(cleanDatabase, 0))
+  afterEach(unary(cleanDatabase))
 
   it("should find avatar input by id", async () => {
     const [createdAvatarInputRow] =

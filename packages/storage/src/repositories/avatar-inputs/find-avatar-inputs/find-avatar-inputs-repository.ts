@@ -1,8 +1,6 @@
 import {
-  bind,
   first,
   type RequireAtLeastOne,
-  when,
 } from "@ai-avatar/dash"
 import { and } from "drizzle-orm"
 
@@ -22,19 +20,17 @@ export const findAvatarsInput = async (
   findParams: FindAvatarInputsParams,
   metaParams?: MetaAvatarInputsParams
 ) => {
-  const query = database
-    .select()
-    .from(avatarInput)
-    .$dynamic()
+  const rows = await database.query.avatarInput.findMany({
+    limit: metaParams?.limit,
+    offset: metaParams?.offset,
+    where: and(...buildEq(avatarInput, findParams)),
+    with: {
+      avatarPersonas: true,
+      user: true,
+    },
+  })
 
-  const where = and(...buildEq(avatarInput, findParams))
-
-  when(metaParams?.limit, bind(query.limit, query))
-  when(metaParams?.offset, bind(query.offset, query))
-
-  when(where, bind(query.where, query))
-
-  return query.execute()
+  return rows
 }
 
 export const findAvatarInput = async (

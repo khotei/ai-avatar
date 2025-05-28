@@ -1,3 +1,4 @@
+import { relations } from "drizzle-orm"
 import {
   boolean,
   integer,
@@ -8,6 +9,7 @@ import {
   varchar,
 } from "drizzle-orm/pg-core"
 
+import { avatarPersona } from "./avatar-persona"
 import { user } from "./user"
 
 export const avatarInput = pgTable("avatar_inputs", {
@@ -45,3 +47,14 @@ export const avatarInput = pgTable("avatar_inputs", {
     .references(() => user.id)
     .notNull(),
 })
+
+export const avatarInputRelations = relations(
+  avatarInput,
+  ({ many, one }) => ({
+    avatarPersonas: many(avatarPersona),
+    user: one(user, {
+      fields: [avatarInput.userId],
+      references: [user.id],
+    }),
+  })
+)

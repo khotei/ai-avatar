@@ -1,29 +1,25 @@
 import { deepEqual, equal, ok } from "node:assert/strict"
-import { after, beforeEach, describe, it } from "node:test"
+import { afterEach, describe, it } from "node:test"
 
 import {
-  ary,
   includes,
   map,
   partition,
   required,
   sample,
   size,
+  unary,
 } from "@ai-avatar/dash"
 
 import {
   findAvatarPersona,
   findAvatarPersonas,
 } from "@/repositories/avatar-personas/find-avatar-personas-repository/find-avatar-personas-repository"
-import {
-  cleanDatabase,
-  seedDatabase,
-} from "@/utils/scripts/seed-database"
+import { cleanDatabase } from "@/utils/scripts/seed-database"
 import { createTestAvatarPersonas } from "@/utils/test-utils/create-test-avatar-personas"
 
 describe("find-avatar-personas-repository", () => {
-  beforeEach(ary(seedDatabase, 0))
-  after(ary(cleanDatabase, 0))
+  afterEach(unary(cleanDatabase))
 
   it("should find avatar persona by id", async () => {
     const [createdAvatarPersonaRow] =

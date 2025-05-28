@@ -22,16 +22,13 @@ export const findUsers = async (
   findParams: FindUsersParams,
   metaParams?: MetaUsersParams
 ) => {
-  const query = database.select().from(user).$dynamic()
+  const rows = await database.query.user.findMany({
+    where: and(...buildEq(user, findParams)),
+    offset: metaParams?.offset,
+    limit: metaParams?.limit,
+  })
 
-  const where = and(...buildEq(user, findParams))
-
-  when(metaParams?.limit, bind(query.limit, query))
-  when(metaParams?.offset, bind(query.offset, query))
-
-  when(where, bind(query.where, query))
-
-  return query.execute()
+  return rows
 }
 
 export const findUser = async (

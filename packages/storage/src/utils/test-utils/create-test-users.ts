@@ -1,27 +1,28 @@
-import { required, when } from "@ai-avatar/dash"
+import { guard, when } from "@ai-avatar/dash"
 import { seed } from "drizzle-seed"
 
 import { database } from "@/lib/database"
 import { user } from "@/schema/user"
+import { isAlreadySeedError } from "@/utils/scripts/seed-database"
 
 export const createTestUsers = async (
   override?: (typeof user.$inferInsert)[]
 ) => {
-  return required(
-    await when(
-      override,
-      async (override) => {
-        await database
-          .insert(user)
-          .values(override)
-          .returning()
-
-        return database.select().from(user)
-      },
-      async () => {
-        await seed(database, { user })
-        return database.select().from(user)
-      }
-    )
+  await when(
+    override,
+    async (override) => {
+      await database
+        .insert(user)
+        .values(override)
+        .returning()
+    },
+    async () => {
+      await guard(
+        () => seed(database, { user }),
+        isAlreadySeedError
+      )
+    }
   )
+
+  return database.query.user.findMany()
 }

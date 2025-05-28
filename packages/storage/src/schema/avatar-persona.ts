@@ -1,3 +1,4 @@
+import { relations } from "drizzle-orm"
 import {
   integer,
   pgTable,
@@ -63,3 +64,17 @@ export const avatarPersona = pgTable("avatar_personas", {
     .notNull(),
   visualSignature: text().array(),
 })
+
+export const avatarPersonaRelations = relations(
+  avatarPersona,
+  ({ one }) => ({
+    avatarInput: one(avatarInput, {
+      fields: [avatarPersona.avatarInputId],
+      references: [avatarInput.id],
+    }),
+    user: one(user, {
+      fields: [avatarPersona.userId],
+      references: [user.id],
+    }),
+  })
+)

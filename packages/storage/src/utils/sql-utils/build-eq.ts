@@ -1,6 +1,6 @@
-import {map, required, toPairs,} from "@ai-avatar/dash"
-import {eq} from "drizzle-orm"
-import type {PgTableWithColumns} from "drizzle-orm/pg-core"
+import { map, required, toPairs } from "@ai-avatar/dash"
+import { eq } from "drizzle-orm"
+import type { PgTableWithColumns } from "drizzle-orm/pg-core"
 
 export const buildEq = <
   // @eslint-ignore @todo: fix any
@@ -11,8 +11,5 @@ export const buildEq = <
   params: TParams
 ) =>
   map(toPairs(params), ([key, value]) =>
-    eq(
-      required((schema)[key]),
-      value
-    )
+    eq(required(schema[key]), value)
   )
