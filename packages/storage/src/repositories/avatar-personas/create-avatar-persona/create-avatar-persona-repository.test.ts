@@ -32,10 +32,10 @@ describe("create-avatar-persona-repository", () => {
       await createAvatarPersona(personaInput)
 
     partialDeepStrictEqual(avatarPersonaRow, {
-      avatarInput: omit<typeof avatarInputRow, keyof typeof avatarInputRow>(avatarInputRow, [
-        "avatarPersonas",
-        "user",
-      ]),
+      avatarInput: omit<
+        typeof avatarInputRow,
+        keyof typeof avatarInputRow
+      >(avatarInputRow, ["avatarPersonas", "user"]),
       user: avatarInputRow.user,
       ...personaInput,
     })

@@ -4,12 +4,14 @@ export {
   findAvatarInput,
   findAvatarsInput,
 } from "@/repositories/avatar-inputs/find-avatar-inputs/find-avatar-inputs-repository"
+export { updateAvatarInput } from "@/repositories/avatar-inputs/update-avatar-input/update-avatar-input-repository"
 
 export { createAvatarPersona } from "@/repositories/avatar-personas/create-avatar-persona/create-avatar-persona-repository"
 export {
   findAvatarPersona,
   findAvatarPersonas,
 } from "@/repositories/avatar-personas/find-avatar-personas-repository/find-avatar-personas-repository"
+export { updateAvatarPersona } from "@/repositories/avatar-personas/update-avatar-persona/update-avatar-persona-repository"
 
 export { createUser } from "@/repositories/users/create-user/create-user-repository"
 export {

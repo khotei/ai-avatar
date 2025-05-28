@@ -16,7 +16,7 @@ export const user = pgTable("users", {
   email: varchar({ length: 255 }).notNull().unique(),
   id: uuid().primaryKey().defaultRandom(),
 
-  updatedAt: timestamp().defaultNow(),
+  updatedAt: timestamp().defaultNow().notNull(),
 })
 
 export const userRelations = relations(

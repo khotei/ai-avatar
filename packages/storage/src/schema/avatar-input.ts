@@ -21,7 +21,7 @@ export const avatarInput = pgTable("avatar_inputs", {
   catchphrases: text().array(),
 
   contentTypes: text().array(),
-  createdAt: timestamp().defaultNow(),
+  createdAt: timestamp().defaultNow().notNull(),
   deletedAt: timestamp(),
   engagementLevel: varchar({ length: 50 }),
 

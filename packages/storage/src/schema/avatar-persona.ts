@@ -57,7 +57,7 @@ export const avatarPersona = pgTable("avatar_personas", {
 
   struggles: text(),
   timezone: varchar({ length: 50 }),
-  updatedAt: timestamp().defaultNow(),
+  updatedAt: timestamp().defaultNow().notNull(),
 
   userId: uuid()
     .references(() => user.id)
