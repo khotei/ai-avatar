@@ -1,25 +1,21 @@
-import { deepEqual } from "node:assert/strict"
-import { after, beforeEach, describe, it } from "node:test"
+import { partialDeepStrictEqual } from "node:assert/strict"
+import { afterEach, describe, it } from "node:test"
 
 import {
-  ary,
   first,
   merge,
-  pick,
+  omit,
   required,
+  unary,
 } from "@ai-avatar/dash"
 
 import { createAvatarPersona } from "@/repositories/avatar-personas/create-avatar-persona/create-avatar-persona-repository"
-import {
-  cleanDatabase,
-  seedDatabase,
-} from "@/utils/scripts/seed-database"
+import { cleanSeed } from "@/utils/scripts/seed-database"
 import { avatarPersonaTestInputs } from "@/utils/test-inputs/avatar-persona-test-inputs"
 import { createTestAvatarInputs } from "@/utils/test-utils/create-test-avatar-inputs"
 
 describe("create-avatar-persona-repository", () => {
-  beforeEach(ary(seedDatabase, 0))
-  after(ary(cleanDatabase, 0))
+  afterEach(unary(cleanSeed))
 
   it("should create avatar persona", async () => {
     const [avatarInputRow] = await createTestAvatarInputs()
@@ -35,15 +31,12 @@ describe("create-avatar-persona-repository", () => {
     const avatarPersonaRow =
       await createAvatarPersona(personaInput)
 
-    deepEqual(avatarPersonaRow, {
-      ...pick(avatarPersonaRow, [
-        "createdAt",
-        "id",
-        "avatarInputId",
-        "deletedAt",
-        "updatedAt",
-      ]),
-      updatedAt: avatarPersonaRow.updatedAt,
+    partialDeepStrictEqual(avatarPersonaRow, {
+      avatarInput: omit<
+        typeof avatarInputRow,
+        keyof typeof avatarInputRow
+      >(avatarInputRow, ["avatarPersonas", "user"]),
+      user: avatarInputRow.user,
       ...personaInput,
     })
   })

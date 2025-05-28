@@ -1,21 +1,17 @@
 import { deepEqual } from "node:assert/strict"
-import { after, beforeEach, describe, it } from "node:test"
+import { afterEach, describe, it } from "node:test"
 
-import { ary, castArray, size } from "@ai-avatar/dash"
+import { castArray, size, unary } from "@ai-avatar/dash"
 
 import {
   findUser,
   findUsers,
 } from "@/repositories/users/find-users/find-users-repository"
-import {
-  cleanDatabase,
-  seedDatabase,
-} from "@/utils/scripts/seed-database"
+import { cleanSeed } from "@/utils/scripts/seed-database"
 import { createTestUsers } from "@/utils/test-utils/create-test-users"
 
 describe("find-users-repository", () => {
-  beforeEach(ary(seedDatabase, 0))
-  after(ary(cleanDatabase, 0))
+  afterEach(unary(cleanSeed))
 
   it("should find user by email", async () => {
     const [createdUserRow] = await createTestUsers()

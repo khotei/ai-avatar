@@ -2,7 +2,7 @@ import { Command } from "commander"
 
 import { dropSchema } from "@/utils/scripts/drop-schema"
 import {
-  cleanDatabase,
+  cleanSeed,
   seedDatabase,
 } from "@/utils/scripts/seed-database"
 
@@ -22,18 +22,19 @@ program
     true
   )
   .action((options) => {
-    seedDatabase(options?.count, options?.clean).catch(
-      () => {
-        process.exit(1)
-      }
-    )
+    seedDatabase({
+      clean: options?.clean,
+      count: options?.count,
+    }).catch(() => {
+      process.exit(1)
+    })
   })
 
 program
   .command("clean")
   .description("Clean the database with data")
   .action(() => {
-    cleanDatabase().catch(() => {
+    cleanSeed().catch(() => {
       process.exit(1)
     })
   })

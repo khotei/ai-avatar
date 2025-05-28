@@ -1,28 +1,58 @@
-import { ary, when } from "@ai-avatar/dash"
+import {
+  isEqual,
+  isInstanceOf,
+  unary,
+  when,
+} from "@ai-avatar/dash"
+import { NeonDbError } from "@neondatabase/serverless"
+import type { PgSchema, PgTable } from "drizzle-orm/pg-core"
 import { reset, seed } from "drizzle-seed"
 
 import { database } from "@/lib/database"
-import { avatarInput } from "@/schema/avatar-input"
-import { avatarPersona } from "@/schema/avatar-persona"
-import { user } from "@/schema/user"
+import * as schema from "@/schema"
 
-const schemas = {
-  avatarsInput: avatarInput,
-  avatarsPersona: avatarPersona,
-  users: user,
+export const cleanSeed = async () => {
+  await reset(database, schema)
 }
 
-export const cleanDatabase = async () => {
-  await reset(database, schemas)
-}
+export const seedDatabase = async ({
+  clean = true,
+  count,
+  schemaOverride,
+}: {
+  clean?: boolean
+  count?: number
+  schemaOverride?: Record<string, PgSchema | PgTable>
+} = {}) => {
+  await when(clean, unary(cleanSeed))
 
-export const seedDatabase = async (
-  count?: number,
-  clean = true
-) => {
-  when(clean, ary(cleanDatabase, 0))
-
-  await seed(database, schemas, {
+  await seed(database, schemaOverride ?? schema, {
     count: count ?? 100,
-  })
+  }).refine((generator) => ({
+    avatarInput: {
+      columns: {
+        deletedAt: generator.default({
+          defaultValue: null,
+        }),
+      },
+    },
+    avatarPersona: {
+      columns: {
+        deletedAt: generator.default({
+          defaultValue: null,
+        }),
+      },
+    },
+    user: {
+      columns: {
+        deletedAt: generator.default({
+          defaultValue: null,
+        }),
+      },
+    },
+  }))
 }
+
+export const isAlreadySeedError = (err: unknown) =>
+  isInstanceOf(err, NeonDbError) &&
+  isEqual(err.code, "23505")

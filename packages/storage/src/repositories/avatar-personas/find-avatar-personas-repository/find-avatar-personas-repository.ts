@@ -1,12 +1,11 @@
 import {
-  bind,
   first,
   type RequireAtLeastOne,
-  when,
 } from "@ai-avatar/dash"
-import { and } from "drizzle-orm"
+import { and, isNull } from "drizzle-orm"
 
 import { database } from "@/lib/database"
+import { avatarInput } from "@/schema"
 import { avatarPersona } from "@/schema/avatar-persona"
 import { buildEq } from "@/utils/sql-utils/build-eq"
 
@@ -25,22 +24,21 @@ export const findAvatarPersonas = async (
   findParams: FindAvatarPersonasParams,
   metaParams?: MetaAvatarPersonasParams
 ) => {
-  const query = database
-    .select()
-    .from(avatarPersona)
-    .$dynamic()
+  const rows = await database.query.avatarPersona.findMany({
+    limit: metaParams?.limit,
+    offset: metaParams?.offset,
+    where: and(
+      ...buildEq(avatarPersona, findParams),
+      isNull(avatarInput.deletedAt)
+    ),
+    with: {
+      avatarInput: true,
+      user: true,
+    },
+  })
 
-  const where = and(...buildEq(avatarPersona, findParams))
-
-  when(metaParams?.limit, bind(query.limit, query))
-  when(metaParams?.offset, bind(query.offset, query))
-
-  when(where, bind(query.where, query))
-
-  return query.execute()
+  return rows
 }
 
-export const findAvatarPersona = async (
-  findParams: FindAvatarPersonasParams
-) =>
-  first(await findAvatarPersonas(findParams, { limit: 1 }))
+export const findAvatarPersona = async (id: string) =>
+  first(await findAvatarPersonas({ id }, { limit: 1 }))

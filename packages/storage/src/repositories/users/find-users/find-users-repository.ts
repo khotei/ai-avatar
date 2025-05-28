@@ -1,8 +1,6 @@
 import {
-  bind,
   first,
   type RequireAtLeastOne,
-  when,
 } from "@ai-avatar/dash"
 import { and } from "drizzle-orm"
 
@@ -22,16 +20,13 @@ export const findUsers = async (
   findParams: FindUsersParams,
   metaParams?: MetaUsersParams
 ) => {
-  const query = database.select().from(user).$dynamic()
+  const rows = await database.query.user.findMany({
+    limit: metaParams?.limit,
+    offset: metaParams?.offset,
+    where: and(...buildEq(user, findParams)),
+  })
 
-  const where = and(...buildEq(user, findParams))
-
-  when(metaParams?.limit, bind(query.limit, query))
-  when(metaParams?.offset, bind(query.offset, query))
-
-  when(where, bind(query.where, query))
-
-  return query.execute()
+  return rows
 }
 
 export const findUser = async (
