@@ -3,12 +3,9 @@ import { randomUUID } from "node:crypto"
 import { afterEach, describe, it } from "node:test"
 
 import { unary } from "@ai-avatar/dash"
-import { eq } from "drizzle-orm"
 
-import { database } from "@/lib/database"
 import { isDatabaseRecordNotFoundError } from "@/lib/database-errors"
 import { deleteAvatarPersona } from "@/repositories/avatar-personas/delete-avatar-persona/delete-avatar-persona-repository"
-import { avatarPersona } from "@/schema/avatar-persona"
 import { cleanSeed } from "@/utils/scripts/seed-database"
 import { createTestAvatarPersonas } from "@/utils/test-utils/create-test-avatar-personas"
 
@@ -40,9 +37,7 @@ describe("delete-avatar-persona-repository", () => {
     const [createdAvatarPersonaRow] =
       await createTestAvatarPersonas()
 
-     await deleteAvatarPersona(
-      createdAvatarPersonaRow.id
-    )
+    await deleteAvatarPersona(createdAvatarPersonaRow.id)
 
     await rejects(
       deleteAvatarPersona(createdAvatarPersonaRow.id),

@@ -19,7 +19,7 @@ export const databaseConfig = defineConfig({
   },
   dialect: "postgresql",
   out: path.join(__dirname, "../migrations"),
-  schemaOverride: path.join(__dirname, "../schema"),
+  schema: path.join(__dirname, "../schema"),
 })
 
 export default databaseConfig

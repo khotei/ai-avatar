@@ -1,27 +1,3 @@
-import { ok } from "node:assert/strict"
-
-export const required = <T>(
-  val: null | T | undefined,
-  err: Error | string = "Value required"
-) => {
-  ok(val, err instanceof Error ? err : new Error(err))
-
-  return val
-}
-
-export const when = <T, R, F>(
-  value: null | T | undefined,
-  onDefined: (value: T) => R,
-  onNil?: () => F
-) => (value ? onDefined(value) : onNil?.())
-
-export const isInstanceOf = <T>(
-  value: unknown,
-  constructor: new (...args: any[]) => T
-): value is T =>
-  typeof constructor === "function" &&
-  value instanceof constructor
-
 export type GuardReturnType<TFunction extends () => any> =
   TFunction extends () => Promise<infer TResolved>
     ? Promise<TResolved | undefined>

@@ -16,11 +16,11 @@ type MetaAvatarInputsParams = RequireAtLeastOne<{
   offset: number
 }>
 
-export const findAvatarsInput = async (
+export const findAvatarsInput = (
   findParams: FindAvatarInputsParams,
   metaParams?: MetaAvatarInputsParams
-) => {
-  const rows = await database.query.avatarInput.findMany({
+) =>
+  database.query.avatarInput.findMany({
     limit: metaParams?.limit,
     offset: metaParams?.offset,
     where: and(
@@ -32,9 +32,6 @@ export const findAvatarsInput = async (
       user: true,
     },
   })
-
-  return rows
-}
 
 export const findAvatarInput = async (id: string) =>
   first(await findAvatarsInput({ id }, { limit: 1 }))
