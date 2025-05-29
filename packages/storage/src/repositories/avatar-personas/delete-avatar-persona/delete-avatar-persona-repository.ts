@@ -8,8 +8,6 @@ import { avatarInput } from "@/schema"
 import { avatarPersona } from "@/schema/avatar-persona"
 
 export const deleteAvatarPersona = async (id: string) => {
-  const now = new Date()
-
   required(
     await findAvatarPersona(id),
     new DatabaseRecordNotFoundError(avatarInput, id)
@@ -18,17 +16,18 @@ export const deleteAvatarPersona = async (id: string) => {
   await database
     .update(avatarPersona)
     .set({
-      deletedAt: now,
+      deletedAt: new Date(),
     })
     .where(eq(avatarPersona.id, id))
 
-  const deletedRow = required(await database.query.avatarPersona.findFirst({
-    where: eq(avatarPersona.id, id),
-    with: {
-      avatarInput: true,
-      user: true,
-    },
-  }))
-
-  return deletedRow
+  return required(
+    await database.query.avatarPersona.findFirst({
+      where: eq(avatarPersona.id, id),
+      with: {
+        avatarInput: true,
+        user: true,
+      },
+    }),
+    new DatabaseRecordNotFoundError(avatarPersona, id)
+  )
 }

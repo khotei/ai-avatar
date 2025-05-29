@@ -20,11 +20,11 @@ type MetaAvatarPersonasParams = RequireAtLeastOne<{
   offset: number
 }>
 
-export const findAvatarPersonas = async (
+export const findAvatarPersonas = (
   findParams: FindAvatarPersonasParams,
   metaParams?: MetaAvatarPersonasParams
-) => {
-  const rows = await database.query.avatarPersona.findMany({
+) =>
+  database.query.avatarPersona.findMany({
     limit: metaParams?.limit,
     offset: metaParams?.offset,
     where: and(
@@ -36,9 +36,6 @@ export const findAvatarPersonas = async (
       user: true,
     },
   })
-
-  return rows
-}
 
 export const findAvatarPersona = async (id: string) =>
   first(await findAvatarPersonas({ id }, { limit: 1 }))

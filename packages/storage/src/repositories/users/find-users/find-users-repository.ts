@@ -16,18 +16,15 @@ type MetaUsersParams = RequireAtLeastOne<{
   offset: number
 }>
 
-export const findUsers = async (
+export const findUsers = (
   findParams: FindUsersParams,
   metaParams?: MetaUsersParams
-) => {
-  const rows = await database.query.user.findMany({
+) =>
+  database.query.user.findMany({
     limit: metaParams?.limit,
     offset: metaParams?.offset,
     where: and(...buildEq(user, findParams)),
   })
-
-  return rows
-}
 
 export const findUser = async (
   findParams: FindUsersParams
