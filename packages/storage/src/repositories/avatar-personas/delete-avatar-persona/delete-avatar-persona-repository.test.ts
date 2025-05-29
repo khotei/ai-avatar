@@ -19,19 +19,12 @@ describe("delete-avatar-persona-repository", () => {
     const [createdAvatarPersonaRow] =
       await createTestAvatarPersonas()
 
-    const deletedId = await deleteAvatarPersona(
+    const deletedRow = await deleteAvatarPersona(
       createdAvatarPersonaRow.id
     )
 
-    equal(deletedId, createdAvatarPersonaRow.id)
-
-    const deletedAvatarPersona =
-      await database.query.avatarPersona.findFirst({
-        where: eq(avatarPersona.id, deletedId),
-      })
-
-    ok(deletedAvatarPersona)
-    ok(deletedAvatarPersona.deletedAt)
+    equal(deletedRow.id, createdAvatarPersonaRow.id)
+    ok(deletedRow.deletedAt)
   })
 
   it("should throw an error when avatar persona does not exist", async () => {
@@ -47,14 +40,9 @@ describe("delete-avatar-persona-repository", () => {
     const [createdAvatarPersonaRow] =
       await createTestAvatarPersonas()
 
-    await database
-      .update(avatarPersona)
-      .set({
-        deletedAt: new Date(),
-      })
-      .where(
-        eq(avatarPersona.id, createdAvatarPersonaRow.id)
-      )
+     await deleteAvatarPersona(
+      createdAvatarPersonaRow.id
+    )
 
     await rejects(
       deleteAvatarPersona(createdAvatarPersonaRow.id),

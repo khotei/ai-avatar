@@ -19,19 +19,12 @@ describe("delete-avatar-input-repository", () => {
     const [createdAvatarInputRow] =
       await createTestAvatarInputs()
 
-    const deletedId = await deleteAvatarInput(
+    const deleteRow = await deleteAvatarInput(
       createdAvatarInputRow.id
     )
 
-    equal(deletedId, createdAvatarInputRow.id)
-
-    const deletedAvatarInput =
-      await database.query.avatarInput.findFirst({
-        where: eq(avatarInput.id, deletedId),
-      })
-
-    ok(deletedAvatarInput)
-    ok(deletedAvatarInput.deletedAt)
+    equal(deleteRow.id, createdAvatarInputRow.id)
+    ok(deleteRow.deletedAt)
   })
 
   it("should throw an error when avatar input does not exist", async () => {
@@ -47,12 +40,9 @@ describe("delete-avatar-input-repository", () => {
     const [createdAvatarInputRow] =
       await createTestAvatarInputs()
 
-    await database
-      .update(avatarInput)
-      .set({
-        deletedAt: new Date(),
-      })
-      .where(eq(avatarInput.id, createdAvatarInputRow.id))
+    await deleteAvatarInput(
+      createdAvatarInputRow.id
+    )
 
     await rejects(
       deleteAvatarInput(createdAvatarInputRow.id),

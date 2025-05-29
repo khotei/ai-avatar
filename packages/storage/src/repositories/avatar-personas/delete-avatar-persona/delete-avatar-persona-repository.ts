@@ -22,5 +22,13 @@ export const deleteAvatarPersona = async (id: string) => {
     })
     .where(eq(avatarPersona.id, id))
 
-  return id
+  const deletedRow = required(await database.query.avatarPersona.findFirst({
+    where: eq(avatarPersona.id, id),
+    with: {
+      avatarInput: true,
+      user: true,
+    },
+  }))
+
+  return deletedRow
 }
