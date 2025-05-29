@@ -5,13 +5,15 @@ import {
   sample,
   when,
 } from "@ai-avatar/dash"
-import { seed } from "drizzle-seed"
 
 import { database } from "@/lib/database"
 import { avatarInput } from "@/schema/avatar-input"
 import { avatarPersona } from "@/schema/avatar-persona"
 import { user } from "@/schema/user"
-import { isAlreadySeedError } from "@/utils/scripts/seed-database"
+import {
+  isAlreadySeedError,
+  seedDatabase,
+} from "@/utils/scripts/seed-database"
 import { avatarInputTestInputs } from "@/utils/test-inputs/avatar-input-test-inputs"
 import { createTestAvatarInputs } from "@/utils/test-utils/create-test-avatar-inputs"
 import { createTestUsers } from "@/utils/test-utils/create-test-users"
@@ -47,10 +49,12 @@ export const createTestAvatarPersonas = async (
     async () => {
       await guard(
         () =>
-          seed(database, {
-            avatarInput,
-            avatarPersona,
-            user,
+          seedDatabase({
+            schemaOverride: {
+              avatarInput,
+              avatarPersona,
+              user,
+            },
           }),
         isAlreadySeedError
       )

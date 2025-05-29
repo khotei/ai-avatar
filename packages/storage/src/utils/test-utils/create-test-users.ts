@@ -1,9 +1,11 @@
 import { guard, when } from "@ai-avatar/dash"
-import { seed } from "drizzle-seed"
 
 import { database } from "@/lib/database"
 import { user } from "@/schema/user"
-import { isAlreadySeedError } from "@/utils/scripts/seed-database"
+import {
+  isAlreadySeedError,
+  seedDatabase,
+} from "@/utils/scripts/seed-database"
 
 export const createTestUsers = async (
   override?: (typeof user.$inferInsert)[]
@@ -18,7 +20,7 @@ export const createTestUsers = async (
     },
     async () => {
       await guard(
-        () => seed(database, { user }),
+        () => seedDatabase({ schemaOverride: { user } }),
         isAlreadySeedError
       )
     }

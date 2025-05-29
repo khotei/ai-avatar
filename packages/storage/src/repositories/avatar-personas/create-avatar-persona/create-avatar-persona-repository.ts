@@ -17,5 +17,5 @@ export const createAvatarPersona = async (
     )
   )
 
-  return required(await findAvatarPersona({ id }))
+  return required(await findAvatarPersona(id))
 }

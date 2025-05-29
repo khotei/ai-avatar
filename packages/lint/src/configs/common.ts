@@ -26,6 +26,7 @@ export const commonConfig = [
       complexity: "off",
       "consistent-return": "off",
       "init-declarations": "off",
+      "max-classes-per-file": "off",
       "max-lines": "off",
       "max-lines-per-function": "off",
       "max-statements": "off",

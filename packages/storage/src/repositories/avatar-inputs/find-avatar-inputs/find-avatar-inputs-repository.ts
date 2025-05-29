@@ -2,7 +2,7 @@ import {
   first,
   type RequireAtLeastOne,
 } from "@ai-avatar/dash"
-import { and } from "drizzle-orm"
+import { and, isNull } from "drizzle-orm"
 
 import { database } from "@/lib/database"
 import { avatarInput } from "@/schema/avatar-input"
@@ -23,7 +23,10 @@ export const findAvatarsInput = async (
   const rows = await database.query.avatarInput.findMany({
     limit: metaParams?.limit,
     offset: metaParams?.offset,
-    where: and(...buildEq(avatarInput, findParams)),
+    where: and(
+      ...buildEq(avatarInput, findParams),
+      isNull(avatarInput.deletedAt)
+    ),
     with: {
       avatarPersonas: true,
       user: true,
@@ -33,6 +36,5 @@ export const findAvatarsInput = async (
   return rows
 }
 
-export const findAvatarInput = async (
-  findParams: FindAvatarInputsParams
-) => first(await findAvatarsInput(findParams, { limit: 1 }))
+export const findAvatarInput = async (id: string) =>
+  first(await findAvatarsInput({ id }, { limit: 1 }))

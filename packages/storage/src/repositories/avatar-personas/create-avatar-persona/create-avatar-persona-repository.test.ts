@@ -10,12 +10,12 @@ import {
 } from "@ai-avatar/dash"
 
 import { createAvatarPersona } from "@/repositories/avatar-personas/create-avatar-persona/create-avatar-persona-repository"
-import { cleanDatabase } from "@/utils/scripts/seed-database"
+import { cleanSeed } from "@/utils/scripts/seed-database"
 import { avatarPersonaTestInputs } from "@/utils/test-inputs/avatar-persona-test-inputs"
 import { createTestAvatarInputs } from "@/utils/test-utils/create-test-avatar-inputs"
 
 describe("create-avatar-persona-repository", () => {
-  afterEach(unary(cleanDatabase))
+  afterEach(unary(cleanSeed))
 
   it("should create avatar persona", async () => {
     const [avatarInputRow] = await createTestAvatarInputs()

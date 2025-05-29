@@ -2,25 +2,24 @@ import { required } from "@ai-avatar/dash"
 import { eq } from "drizzle-orm"
 
 import { database } from "@/lib/database"
+import { DatabaseRecordNotFoundError } from "@/lib/database-errors"
 import { findAvatarInput } from "@/repositories/avatar-inputs/find-avatar-inputs/find-avatar-inputs-repository"
 import { avatarInput } from "@/schema/avatar-input"
 
-export const updateAvatarInput = async (
-  id: string,
-  params: Omit<
-    typeof avatarInput.$inferInsert,
-    "createdAt" | "userId"
-  >
-) => {
+export const deleteAvatarInput = async (id: string) => {
   const now = new Date()
+
+  required(
+    await findAvatarInput(id),
+    new DatabaseRecordNotFoundError(avatarInput, id)
+  )
 
   await database
     .update(avatarInput)
     .set({
-      ...params,
-      updatedAt: now,
+      deletedAt: now,
     })
     .where(eq(avatarInput.id, id))
 
-  return required(await findAvatarInput(id))
+  return id
 }

@@ -17,5 +17,5 @@ export const createAvatarInput = async (
     )
   )
 
-  return required(await findAvatarInput({ id }))
+  return required(await findAvatarInput(id))
 }

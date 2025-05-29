@@ -15,19 +15,19 @@ import {
   findAvatarPersona,
   findAvatarPersonas,
 } from "@/repositories/avatar-personas/find-avatar-personas-repository/find-avatar-personas-repository"
-import { cleanDatabase } from "@/utils/scripts/seed-database"
+import { cleanSeed } from "@/utils/scripts/seed-database"
 import { createTestAvatarPersonas } from "@/utils/test-utils/create-test-avatar-personas"
 
 describe("find-avatar-personas-repository", () => {
-  afterEach(unary(cleanDatabase))
+  afterEach(unary(cleanSeed))
 
   it("should find avatar persona by id", async () => {
     const [createdAvatarPersonaRow] =
       await createTestAvatarPersonas()
 
-    const avatarPersonaRow = await findAvatarPersona({
-      id: createdAvatarPersonaRow.id,
-    })
+    const avatarPersonaRow = await findAvatarPersona(
+      createdAvatarPersonaRow.id
+    )
 
     deepEqual(createdAvatarPersonaRow, avatarPersonaRow)
   })

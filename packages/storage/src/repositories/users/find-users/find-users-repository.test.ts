@@ -7,11 +7,11 @@ import {
   findUser,
   findUsers,
 } from "@/repositories/users/find-users/find-users-repository"
-import { cleanDatabase } from "@/utils/scripts/seed-database"
+import { cleanSeed } from "@/utils/scripts/seed-database"
 import { createTestUsers } from "@/utils/test-utils/create-test-users"
 
 describe("find-users-repository", () => {
-  afterEach(unary(cleanDatabase))
+  afterEach(unary(cleanSeed))
 
   it("should find user by email", async () => {
     const [createdUserRow] = await createTestUsers()

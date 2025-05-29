@@ -14,12 +14,12 @@ import {
 } from "@ai-avatar/dash"
 
 import { updateAvatarPersona } from "@/repositories/avatar-personas/update-avatar-persona/update-avatar-persona-repository"
-import { cleanDatabase } from "@/utils/scripts/seed-database"
+import { cleanSeed } from "@/utils/scripts/seed-database"
 import { avatarPersonaTestInputs } from "@/utils/test-inputs/avatar-persona-test-inputs"
 import { createTestAvatarPersonas } from "@/utils/test-utils/create-test-avatar-personas"
 
 describe("update-avatar-persona-repository", () => {
-  afterEach(unary(cleanDatabase))
+  afterEach(unary(cleanSeed))
 
   it("should update avatar persona by id", async () => {
     const [createdAvatarPersonaRow] =
