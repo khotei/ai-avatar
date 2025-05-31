@@ -2,7 +2,13 @@ import {
   partialDeepStrictEqual,
   rejects,
 } from "assert/strict"
-import { after, before, describe, it } from "node:test"
+import {
+  after,
+  afterEach,
+  before,
+  describe,
+  it,
+} from "node:test"
 
 import { isInstanceOf } from "@ai-avatar/dash"
 import { cleanSeed } from "@ai-avatar/storage"
@@ -17,7 +23,7 @@ let server: ReturnType<typeof startTrpc>
 const isUserAlreadyExistTRPCError = (error: unknown) =>
   isInstanceOf(error, TRPCClientError) &&
   eq(error.data.code, "BAD_REQUEST") &&
-  eq(/user already exists/ui.test(error.message), true)
+  eq(/user already exists/iu.test(error.message), true)
 
 before(async () => {
   await new Promise((resolve) => {
@@ -34,7 +40,7 @@ after(async () => {
   })
 })
 
-after(unary(cleanSeed))
+afterEach(unary(cleanSeed))
 
 describe("register", () => {
   it("should register and return user", async () => {
