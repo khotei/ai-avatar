@@ -7,5 +7,5 @@ export const server = createHTTPServer({
 })
 
 export const startTrpc = () => {
-  server.listen(9000)
+  return server.listen(9000)
 }

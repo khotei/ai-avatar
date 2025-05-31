@@ -20,3 +20,9 @@ export {
   findUser,
   findUsers,
 } from "@/repositories/users/find-users/find-users-repository"
+
+export { dropSchema } from "@/utils/scripts/drop-schema"
+export {
+  cleanSeed,
+  seedDatabase,
+} from "@/utils/scripts/seed-database"
