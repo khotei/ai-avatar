@@ -1,3 +1,3 @@
-import { startTrpc } from "@/trpc/lib/start-trpc"
+import { startTrpc } from "@/trpc/core/start-trpc"
 
 startTrpc()

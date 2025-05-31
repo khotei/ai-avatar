@@ -1,12 +1,14 @@
 import { isInstanceOf } from "../is-instance-of/is-instance-of.js"
 
-type SpecificHandler = (error: Error) => never | void | Error
+type SpecificHandler = (
+  error: Error
+) => Error | undefined | void
 type AnyOtherHandler = (error: Error) => never
 
 export const throwWhenError: {
   (
     error: unknown,
-    whenSpecific: (error: Error) => never | Error,
+    whenSpecific: (error: Error) => Error | never
   ): asserts error is null | undefined
 
   (

@@ -1,56 +1,66 @@
+import { equal } from "node:assert/strict"
 import { describe, it } from "node:test"
-import { strictEqual, ok } from "node:assert/strict"
+
 import { when } from "./when.js"
 
-// Custom mock function implementation
-function createMock() {
-  const mock = function(...args: any[]) {
-    mock.calls.push(args)
-    return mock.returnValue
+const createMock = (): any => {
+  const mockFunction = function mockFunction(
+    ...args: any[]
+  ) {
+    mockFunction.calls.push(args)
+    return mockFunction.returnValue
   }
-  mock.calls = [] as any[][]
-  mock.returnValue = undefined
-  mock.mockReturnValue = function(value: any) {
-    mock.returnValue = value
-    return mock
+  mockFunction.calls = [] as any[][]
+  mockFunction.returnValue = undefined
+  mockFunction.mockReturnValue = function mockReturnValue(
+    value: any
+  ) {
+    mockFunction.returnValue = value
+    return mockFunction
   }
-  mock.mockReset = function() {
-    mock.calls = []
-    return mock
+  mockFunction.mockReset = function mockReset() {
+    mockFunction.calls = []
+    return mockFunction
   }
-  return mock
+  return mockFunction
 }
 
 describe("when", () => {
   it("should call onDefined with the value if it is not null or undefined", () => {
     const onDefined = createMock()
     when("test", onDefined)
-    strictEqual(onDefined.calls.length, 1)
-    strictEqual(onDefined.calls[0][0], "test")
+    equal(onDefined.calls.length, 1)
+    equal(onDefined.calls[0][0], "test")
   })
 
   it("should return the result of onDefined if the value is not null or undefined", () => {
-    const result = when("test", (value) => value.toUpperCase())
-    strictEqual(result, "TEST")
+    const result = when("test", (value) =>
+      value.toUpperCase()
+    )
+    equal(result, "TEST")
   })
 
   it("should call onNil if the value is null or undefined", () => {
     const onNil = createMock()
-    when(null, () => {}, onNil)
-    strictEqual(onNil.calls.length, 1)
+    when(null, () => undefined, onNil)
+    equal(onNil.calls.length, 1)
 
     onNil.mockReset()
-    when(undefined, () => {}, onNil)
-    strictEqual(onNil.calls.length, 1)
+    when(undefined, () => undefined, onNil)
+    equal(onNil.calls.length, 1)
   })
 
   it("should return the result of onNil if the value is null or undefined", () => {
-    const result = when(null, () => "defined", () => "nil")
-    strictEqual(result, "nil")
+    const result = when(
+      null,
+      () => "defined",
+      () => "nil"
+    )
+    equal(result, "nil")
   })
 
   it("should return undefined if the value is null or undefined and onNil is not provided", () => {
     const result = when(null, () => "defined")
-    strictEqual(result, undefined)
+    equal(result, undefined)
   })
 })

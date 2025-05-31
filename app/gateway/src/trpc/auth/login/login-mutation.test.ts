@@ -37,26 +37,26 @@ after(async () => {
 
 afterEach(unary(cleanSeed))
 
-describe("register", () => {
-  it("should register and return user", async () => {
+describe("login", () => {
+  it("should login and return user", async () => {
     const input = { email: "test@email.com" }
-    const response = await trpcClient.register.mutate(input)
+    const { user } = await trpcClient.register.mutate(input)
+
+    const response = await trpcClient.login.mutate({
+      email: user.email,
+    })
 
     partialDeepStrictEqual(response.user, input)
     ok(response.token)
   })
 
-  it("should throw error when user already exists", async () => {
+  it("should throw error when user not exists", async () => {
     const input = { email: "test@email.com" }
-    await trpcClient.register.mutate(input)
 
     await rejects(
-      trpcClient.register.mutate(input),
-      partialRight(
-        isMatchTRPCError,
-        /user already exists/iu
-      ),
-      "Should return user already exists error"
+      trpcClient.login.mutate(input),
+      partialRight(isMatchTRPCError, /user not found/iu),
+      "Should return user not found error"
     )
   })
 })
