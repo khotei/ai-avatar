@@ -5,25 +5,25 @@ import {
 } from "@ai-avatar/dash"
 import { z } from "zod"
 
-import { registerUser } from "@/domain/auth/register-user"
+import { loginUser } from "@/domain/auth/login-user"
 import { throwError } from "@/lib/throw-error"
 import { publicProcedure } from "@/trpc/core/trpc"
 import { throwTRPCErrorWhenMatch } from "@/trpc/lib/throw-trpc-error-when-match"
 
-export const registerMutation = publicProcedure
+export const loginMutation = publicProcedure
   .input(z.object({ email: z.string().email().min(3) }))
   .mutation(async (opts) => {
     const {
       input: { email },
     } = opts
 
-    const [err, auth] = await tryit(registerUser)(email)
+    const [err, auth] = await tryit(loginUser)(email)
 
     throwWhenError(
       err,
       partialRight(
         throwTRPCErrorWhenMatch,
-        /user already exists/iu
+        /user not found/iu
       ),
       throwError
     )

@@ -1,3 +1,3 @@
-import type { appRouter } from "@/trpc/lib/trpc-router"
+import type { appRouter } from "@/trpc/core/trpc-router"
 
 export type AppRouter = typeof appRouter

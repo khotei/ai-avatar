@@ -19,6 +19,7 @@ export const commonConfig = [
       "@typescript-eslint/consistent-type-imports": "error",
       "@typescript-eslint/no-explicit-any": "warn",
       "@typescript-eslint/no-extraneous-class": "off",
+      "@typescript-eslint/no-invalid-void-type": "off",
       "@typescript-eslint/no-unused-vars": "warn",
       camelcase: "off",
       "capitalized-comments": "off",

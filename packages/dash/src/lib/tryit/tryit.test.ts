@@ -1,5 +1,6 @@
+import { equal } from "node:assert/strict"
 import { describe, it } from "node:test"
-import { equal, } from "node:assert/strict"
+
 import { tryit } from "./tryit"
 
 describe("tryit", () => {
@@ -19,12 +20,16 @@ describe("tryit", () => {
   })
 
   it("should pass arguments to the function", () => {
-    const [, result] = tryit((a: number, b: number) => a + b)(1, 2)
+    const [, result] = tryit(
+      (num1: number, num2: number) => num1 + num2
+    )(1, 2)
     equal(result, 3)
   })
 
   it("should handle async functions", async () => {
-    const [err, result] = await tryit(async () => "result")()
+    const [err, result] = await tryit(
+      async () => "result"
+    )()
     equal(err, undefined)
     equal(result, "result")
   })
@@ -39,7 +44,9 @@ describe("tryit", () => {
   })
 
   it("should handle async functions with arguments", async () => {
-    const [, result] = await tryit(async (a: number, b: number) => a + b)(1, 2)
+    const [, result] = await tryit(
+      async (num1: number, num2: number) => num1 + num2
+    )(1, 2)
     equal(result, 3)
   })
 })
