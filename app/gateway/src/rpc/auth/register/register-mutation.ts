@@ -7,8 +7,8 @@ import { z } from "zod"
 
 import { registerUser } from "@/domain/auth/register-user"
 import { throwError } from "@/lib/throw-error"
-import { publicProcedure } from "@/trpc/core/trpc"
-import { throwTRPCErrorWhenMatch } from "@/trpc/lib/throw-trpc-error-when-match"
+import { publicProcedure } from "@/rpc/core/rpc"
+import { throwTRPCErrorWhenMatch } from "@/rpc/utils/throw-trpc-error-when-match"
 
 export const registerMutation = publicProcedure
   .input(z.object({ email: z.string().email().min(3) }))

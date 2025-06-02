@@ -14,15 +14,15 @@ import {
 import { partialRight, unary } from "@ai-avatar/dash"
 import { cleanSeed } from "@ai-avatar/storage"
 
-import { startTrpc } from "@/trpc/core/start-trpc"
-import { trpcClient } from "@/trpc/core/trpc-client"
-import { isMatchTRPCError } from "@/trpc/lib/is-match-trpc-error"
+import { createRPCClient } from "@/rpc/core/create-rpc-client"
+import { startRpc } from "@/rpc/core/start-rpc"
+import { isMatchTRPCError } from "@/rpc/utils/is-match-trpc-error"
 
-let server: ReturnType<typeof startTrpc>
+let server: ReturnType<typeof startRpc>
 
 before(async () => {
   await new Promise((resolve) => {
-    server = startTrpc()
+    server = startRpc()
     server.on("listening", resolve)
   })
 })
@@ -37,26 +37,27 @@ after(async () => {
 
 afterEach(unary(cleanSeed))
 
-describe("register", () => {
-  it("should register and return user", async () => {
+describe("login", () => {
+  it("should login and return user", async () => {
     const input = { email: "test@email.com" }
-    const response = await trpcClient.register.mutate(input)
+    const { user } =
+      await createRPCClient().register.mutate(input)
+
+    const response = await createRPCClient().login.mutate({
+      email: user.email,
+    })
 
     partialDeepStrictEqual(response.user, input)
     ok(response.token)
   })
 
-  it("should throw error when user already exists", async () => {
+  it("should throw error when user not exists", async () => {
     const input = { email: "test@email.com" }
-    await trpcClient.register.mutate(input)
 
     await rejects(
-      trpcClient.register.mutate(input),
-      partialRight(
-        isMatchTRPCError,
-        /user already exists/iu
-      ),
-      "Should return user already exists error"
+      createRPCClient().login.mutate(input),
+      partialRight(isMatchTRPCError, /user not found/iu),
+      "Should return user not found error"
     )
   })
 })
