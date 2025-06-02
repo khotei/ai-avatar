@@ -24,13 +24,13 @@ Its goals:
 
 ## 🧰 Toolchain Overview
 
-| Domain   | Tools                                                                                                                                                                 |
-|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Monorepo | [Turborepo](https://turborepo.com/), [npm workspaces](https://docs.npmjs.com/cli/v11/using-npm/workspaces)                                                            |
-| Frontend | [React 19](https://react.dev/), [TanStack](https://tanstack.com/), [Chakra UI](https://chakra-ui.com/), [react-use](https://github.com/streamich/react-use)           |
-| Backend  | [tRPC](https://trpc.io/), [Drizzle](https:/drizzle.team/), [Better Auth](https://www.better-auth.com/), [Neon](https://neon.tech/)                                    |
-| Shared   | [Zod](https://zod.dev/), [Lodash](https://lodash.com/), [date-fns](https://date-fns.org/), [type-fest](https://github.com/sindresorhus/type-fest)                     |
-| Tooling  | [ESLint](https://eslint.org/), [TypeScript](https://www.typescriptlang.org/), [GitHub Actions](https://docs.github.com/en/actions), [Pulumi](https://www.pulumi.com/) |
+| Domain   | Tools                                                                                                                                                                                                   |
+|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Monorepo | [Turborepo](https://turborepo.com/), [npm workspaces](https://docs.npmjs.com/cli/v11/using-npm/workspaces)                                                                                              |
+| Frontend | [React 19](https://react.dev/), [TanStack](https://tanstack.com/), [Chakra UI](https://chakra-ui.com/), [react-use](https://github.com/streamich/react-use)                                             |
+| Backend  | [tRPC](https://trpc.io/), [Drizzle](https:/drizzle.team/), [Better Auth](https://www.better-auth.com/), [Neon](https://neon.tech/)                                                                      |
+| Shared   | [Zod](https://zod.dev/), [Lodash](https://lodash.com/), [date-fns](https://date-fns.org/), [type-fest](https://github.com/sindresorhus/type-fest)                                                       |
+| Tooling  | [ESLint](https://eslint.org/), [TypeScript](https://www.typescriptlang.org/), [GitHub Actions](https://docs.github.com/en/actions), [Pulumi](https://www.pulumi.com/), [gitm😎ji](https://gitmoji.dev/) |
 
 ---
 
