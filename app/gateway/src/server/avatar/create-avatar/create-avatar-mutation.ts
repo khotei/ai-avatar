@@ -3,12 +3,12 @@ import {
   throwWhenError,
   tryit,
 } from "@ai-avatar/dash"
+import { throwTRPCErrorWhenMatch } from "@ai-avatar/rpc"
 import { z } from "zod"
 
+import { throwError } from "@/common/lib/throw-error"
 import { createAvatar } from "@/domain/avatar/create-avatar-input"
-import { throwError } from "@/lib/throw-error"
-import { protectedProcedure } from "@/rpc/core/rpc"
-import { throwTRPCErrorWhenMatch } from "@/rpc/utils/throw-trpc-error-when-match"
+import { protectedProcedure } from "@/server/rpc/rpc"
 
 export const createAvatarMutation = protectedProcedure
   .input(

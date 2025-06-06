@@ -3,9 +3,9 @@ import { describe, it } from "node:test"
 
 import { partialRight } from "@ai-avatar/dash"
 
-import { isMatchTRPCError } from "@/rpc/utils/is-match-trpc-error"
+import { isMatchTRPCError } from "@/lib/is-match-trpc-error"
 
-import { createAuthMiddleware } from "./auth-middleware"
+import { createAuthMiddleware } from "./create-auth-middleware"
 
 const mockUser = {
   email: "test@example.com",
@@ -28,7 +28,7 @@ const middlewareMock = {
   },
 }
 
-describe("authMiddleware", () => {
+describe("create-auth-middleware", () => {
   it("should add user to context when token is valid", async () => {
     const { authProcedure } = createAuthMiddleware({
       extractAuth: middlewareMock.extractAuth.includeUser,

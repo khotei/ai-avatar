@@ -11,29 +11,20 @@ import {
   it,
 } from "node:test"
 
-import { partialRight, unary } from "@ai-avatar/dash"
+import { bind, partialRight, unary } from "@ai-avatar/dash"
+import { isMatchTRPCError } from "@ai-avatar/rpc"
 import { cleanSeed } from "@ai-avatar/storage"
 
-import { createRPCClient } from "@/rpc/core/create-rpc-client"
-import { startRpc } from "@/rpc/core/start-rpc"
-import { isMatchTRPCError } from "@/rpc/utils/is-match-trpc-error"
+import { createClient } from "@/server/rpc/create-client"
+import { server } from "@/server/server"
+import {
+  closeServer,
+  listenServer,
+} from "@/server/start-server"
 
-let server: ReturnType<typeof startRpc>
+before(bind(listenServer, null, server))
 
-before(async () => {
-  await new Promise((resolve) => {
-    server = startRpc()
-    server.on("listening", resolve)
-  })
-})
-
-after(async () => {
-  server.close()
-
-  await new Promise((resolve) => {
-    server.on("close", resolve)
-  })
-})
+after(bind(closeServer, null, server))
 
 afterEach(unary(cleanSeed))
 
@@ -41,7 +32,7 @@ describe("createAvatar", () => {
   it("should create avatar when user is authenticated", async () => {
     const registerInput = { email: "test@email.com" }
     const { token, user } =
-      await createRPCClient().register.mutate(registerInput)
+      await createClient().register.mutate(registerInput)
 
     const avatarInput = {
       age: 25,
@@ -49,7 +40,7 @@ describe("createAvatar", () => {
       name: "Test Avatar",
     }
 
-    const response = await createRPCClient({
+    const response = await createClient({
       token,
     }).createAvatar.mutate(avatarInput)
 
@@ -69,7 +60,7 @@ describe("createAvatar", () => {
     }
 
     await rejects(
-      createRPCClient().createAvatar.mutate(avatarInput),
+      createClient().createAvatar.mutate(avatarInput),
       partialRight(
         isMatchTRPCError,
         /authentication required/iu

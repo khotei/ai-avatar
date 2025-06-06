@@ -1,28 +1,23 @@
 {
-  "name": "@ai-avatar/gateway",
+  "name": "@ai-avatar/rpc",
   "private": true,
   "version": "0.0.1",
   "main": "./dist/index.js",
   "scripts": {
-    "dev": "tsx watch ./src/main.ts",
-    "start": "node ./dist/main.js",
     "build": "tsc && tsc-alias",
-    "test": "tsx --test ./**/*.test.ts",
+    "dev": "concurrently --kill-others \"tsc -w\" \"tsc-alias -w\"",
     "type-check": "tsc -b --noEmit",
     "lint": "lint",
     "format": "lint --fix",
     "clean": "rm -rf ./node_modules && rm -rf ./.turbo && rm -rf ./dist"
   },
   "dependencies": {
-    "@ai-avatar/env-config": "*",
-    "@ai-avatar/storage": "*",
-    "@ai-avatar/rpc": "*",
     "@trpc/client": "^11.1.2",
-    "@trpc/server": "^11.1.2",
-    "zod": "^3.24.4"
+    "@trpc/server": "^11.1.2"
   },
   "devDependencies": {
     "@ai-avatar/lint": "*",
-    "@types/node": "^22.15.17"
+    "@types/node": "^22.15.17",
+    "concurrently": "^8.2.2"
   }
 }

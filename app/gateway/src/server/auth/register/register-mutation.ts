@@ -3,27 +3,27 @@ import {
   throwWhenError,
   tryit,
 } from "@ai-avatar/dash"
+import { throwTRPCErrorWhenMatch } from "@ai-avatar/rpc"
 import { z } from "zod"
 
-import { loginUser } from "@/domain/auth/login-user"
-import { throwError } from "@/lib/throw-error"
-import { publicProcedure } from "@/rpc/core/rpc"
-import { throwTRPCErrorWhenMatch } from "@/rpc/utils/throw-trpc-error-when-match"
+import { throwError } from "@/common/lib/throw-error"
+import { registerUser } from "@/domain/auth/register-user"
+import { procedure } from "@/server/rpc/rpc"
 
-export const loginMutation = publicProcedure
+export const registerMutation = procedure
   .input(z.object({ email: z.string().email().min(3) }))
   .mutation(async (opts) => {
     const {
       input: { email },
     } = opts
 
-    const [err, auth] = await tryit(loginUser)(email)
+    const [err, auth] = await tryit(registerUser)(email)
 
     throwWhenError(
       err,
       partialRight(
         throwTRPCErrorWhenMatch,
-        /user not found/iu
+        /user already exists/iu
       ),
       throwError
     )

@@ -1,18 +1,21 @@
 import type { IncomingMessage } from "http"
 
 import { type RequireAtLeastOne } from "@ai-avatar/dash"
-import type { CreateHTTPContextOptions } from "@trpc/server/adapters/standalone"
 
 type CreateContextOptions = {
   extractToken: (req: IncomingMessage) => string | undefined
 }
 
-export const createContext =
+export type AuthContext = {
+  token?: string
+}
+
+export const createAuthContext =
   ({
     extractToken,
   }: RequireAtLeastOne<CreateContextOptions>) =>
-  ({ req }: CreateHTTPContextOptions) => {
+  ({ req }: { req: IncomingMessage }) => {
     return {
-      token: extractToken?.(req),
+      token: extractToken(req),
     }
   }

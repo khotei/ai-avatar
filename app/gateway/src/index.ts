@@ -1,3 +1,3 @@
-import type { appRouter } from "@/rpc/core/rpc-router"
+import type { appRouter } from "@/server/core/rpc-router"
 
 export type AppRouter = typeof appRouter

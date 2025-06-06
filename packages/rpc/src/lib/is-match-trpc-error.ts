@@ -1,7 +1,7 @@
 import {
   eq,
   partial,
-  returnIdentical,
+  stubTrue,
   when,
 } from "@ai-avatar/dash"
 import { isInstanceOf } from "@ai-avatar/dash/dist/lib/is-instance-of/is-instance-of"
@@ -15,15 +15,7 @@ export const isMatchTRPCError = (
   code?: TRPC_ERROR_CODE_KEY
 ) =>
   ((isInstanceOf(error, TRPCClientError) &&
-    when(
-      code,
-      partial(eq, error.data.code),
-      returnIdentical(true)
-    )) ||
+    when(code, partial(eq, error.data.code), stubTrue)) ||
     (isInstanceOf(error, TRPCError) &&
-      when(
-        code,
-        partial(eq, error.code),
-        returnIdentical(true)
-      ))) &&
+      when(code, partial(eq, error.code), stubTrue))) &&
   eq(regExp.test(error.message), true)
