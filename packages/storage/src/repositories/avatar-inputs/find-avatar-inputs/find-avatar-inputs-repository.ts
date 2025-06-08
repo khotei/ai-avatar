@@ -16,7 +16,7 @@ type MetaAvatarInputsParams = RequireAtLeastOne<{
   offset: number
 }>
 
-export const findAvatarsInput = (
+export const findAvatarInputs = (
   findParams: FindAvatarInputsParams,
   metaParams?: MetaAvatarInputsParams
 ) =>
@@ -34,4 +34,4 @@ export const findAvatarsInput = (
   })
 
 export const findAvatarInput = async (id: string) =>
-  first(await findAvatarsInput({ id }, { limit: 1 }))
+  first(await findAvatarInputs({ id }, { limit: 1 }))

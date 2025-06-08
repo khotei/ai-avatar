@@ -13,7 +13,7 @@ import {
 
 import {
   findAvatarInput,
-  findAvatarsInput,
+  findAvatarInputs,
 } from "@/repositories/avatar-inputs/find-avatar-inputs/find-avatar-inputs-repository"
 import { cleanSeed } from "@/utils/scripts/seed-database"
 import { createTestAvatarInputs } from "@/utils/test-utils/create-test-avatar-inputs"
@@ -44,7 +44,7 @@ describe("find-avatar-inputs-repository", () => {
       ["userId", userId]
     )
 
-    const avatarInputRows = await findAvatarsInput({
+    const avatarInputRows = await findAvatarInputs({
       userId,
     })
 

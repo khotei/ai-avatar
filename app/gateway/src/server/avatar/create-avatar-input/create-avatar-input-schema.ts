@@ -1,4 +1,4 @@
 import { avatarInputInsertSchema } from "@ai-avatar/storage"
 
-export const createAvatarInputSchema =
+export const avatarInputCreateInputSchema =
   avatarInputInsertSchema.omit({ id: true, userId: true })

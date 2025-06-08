@@ -1,5 +1,4 @@
 import {
-  ok,
   partialDeepStrictEqual,
   rejects,
 } from "node:assert/strict"
@@ -44,8 +43,7 @@ describe("createAvatarInput", () => {
       token,
     }).createAvatarInput.mutate(avatarInput)
 
-    ok(response.avatar)
-    partialDeepStrictEqual(response.avatar, {
+    partialDeepStrictEqual(response, {
       ...avatarInput,
       user,
       userId: user.id,

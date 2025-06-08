@@ -3,7 +3,7 @@ export { createAvatarInput } from "@/repositories/avatar-inputs/create-avatar-in
 export { deleteAvatarInput } from "@/repositories/avatar-inputs/delete-avatar-input/delete-avatar-input-repository"
 export {
   findAvatarInput,
-  findAvatarsInput,
+  findAvatarInputs,
 } from "@/repositories/avatar-inputs/find-avatar-inputs/find-avatar-inputs-repository"
 export { updateAvatarInput } from "@/repositories/avatar-inputs/update-avatar-input/update-avatar-input-repository"
 

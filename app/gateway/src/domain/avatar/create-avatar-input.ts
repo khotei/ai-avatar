@@ -8,7 +8,5 @@ export const createAvatarInput = async (
 ) => {
   const avatar = await createAvatarInputRepo(input)
 
-  return {
-    avatar,
-  }
+  return avatar
 }
