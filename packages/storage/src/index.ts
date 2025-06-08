@@ -26,3 +26,22 @@ export {
   cleanSeed,
   seedDatabase,
 } from "@/utils/scripts/seed-database"
+
+export {
+  avatarInputInsertSchema,
+  type AvatarInputInsertSchema,
+  avatarInputUpdateSchema,
+  type AvatarInputUpdateSchema,
+} from "@/utils/validation-schemas/avatar-input-validation-schema"
+export {
+  avatarPersonaInsertSchema,
+  type AvatarPersonaInsertSchema,
+  avatarPersonaUpdateSchema,
+  type AvatarPersonaUpdateSchema,
+} from "@/utils/validation-schemas/avatar-persona-validation-schema"
+export {
+  userInsertSchema,
+  type UserInsertSchema,
+  userUpdateSchema,
+  type UserUpdateSchema,
+} from "@/utils/validation-schemas/user-validation-schema"

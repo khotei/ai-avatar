@@ -13,12 +13,13 @@
   "dependencies": {
     "lodash": "^4.17.16",
     "lodash-es": "^4.17.21",
-    "type-fest": "^4.41.0"
+    "type-fest": "^4.41.0",
+    "zod": "^3.25.56"
   },
   "devDependencies": {
+    "@ai-avatar/env-config": "*",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^22.15.17",
-    "concurrently": "^8.2.2",
-    "@ai-avatar/env-config": "*"
+    "concurrently": "^8.2.2"
   }
 }

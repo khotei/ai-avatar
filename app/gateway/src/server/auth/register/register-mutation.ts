@@ -4,14 +4,14 @@ import {
   tryit,
 } from "@ai-avatar/dash"
 import { throwTRPCErrorWhenMatch } from "@ai-avatar/rpc"
-import { z } from "zod"
 
 import { throwError } from "@/common/lib/throw-error"
 import { registerUser } from "@/domain/auth/register-user"
+import { registerSchema } from "@/server/auth/register/register-schema"
 import { procedure } from "@/server/rpc/rpc"
 
 export const registerMutation = procedure
-  .input(z.object({ email: z.string().email().min(3) }))
+  .input(registerSchema)
   .mutation(async (opts) => {
     const {
       input: { email },

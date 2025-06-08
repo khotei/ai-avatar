@@ -1,24 +1,12 @@
-import { ok } from "node:assert/strict"
+import {
+  type AvatarInputInsertSchema,
+  createAvatarInput as createAvatarInputRepo,
+} from "@ai-avatar/storage"
 
-import { createAvatarInput } from "@ai-avatar/storage"
-
-export const createAvatar = async (
-  userId: string,
-  input: {
-    age: number
-    gender: string
-    name: string
-  }
+export const createAvatarInput = async (
+  input: AvatarInputInsertSchema
 ) => {
-  ok(userId, "User ID is required")
-  ok(input.age, "Age is required")
-  ok(input.gender, "Gender is required")
-  ok(input.name, "Name is required")
-
-  const avatar = await createAvatarInput({
-    ...input,
-    userId,
-  })
+  const avatar = await createAvatarInputRepo(input)
 
   return {
     avatar,

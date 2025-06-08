@@ -4,30 +4,24 @@ import {
   tryit,
 } from "@ai-avatar/dash"
 import { throwTRPCErrorWhenMatch } from "@ai-avatar/rpc"
-import { z } from "zod"
 
 import { throwError } from "@/common/lib/throw-error"
-import { createAvatar } from "@/domain/avatar/create-avatar-input"
+import { createAvatarInput } from "@/domain/avatar/create-avatar-input"
+import { createAvatarInputSchema } from "@/server/avatar/create-avatar-input/create-avatar-input-schema"
 import { protectedProcedure } from "@/server/rpc/rpc"
 
-export const createAvatarMutation = protectedProcedure
-  .input(
-    z.object({
-      age: z.number().int().positive(),
-      gender: z.string().min(1),
-      name: z.string().min(1),
-    })
-  )
+export const createAvatarInputMutation = protectedProcedure
+  .input(createAvatarInputSchema)
   .mutation(async (opts) => {
     const {
       ctx: { user },
       input,
     } = opts
 
-    const [err, result] = await tryit(createAvatar)(
-      user.id,
-      input
-    )
+    const [err, result] = await tryit(createAvatarInput)({
+      ...input,
+      userId: user.id,
+    })
 
     throwWhenError(
       err,

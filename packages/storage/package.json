@@ -22,7 +22,8 @@
     "@ai-avatar/env-config": "*",
     "@neondatabase/serverless": "^1.0.0",
     "commander": "^11.1.0",
-    "drizzle-orm": "^0.43.1"
+    "drizzle-orm": "^0.43.1",
+    "drizzle-zod": "^0.8.2"
   },
   "devDependencies": {
     "@ai-avatar/lint": "*",

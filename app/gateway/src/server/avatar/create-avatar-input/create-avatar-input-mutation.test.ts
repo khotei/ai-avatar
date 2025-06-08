@@ -28,7 +28,7 @@ after(bind(closeServer, null, server))
 
 afterEach(unary(cleanSeed))
 
-describe("createAvatar", () => {
+describe("createAvatarInput", () => {
   it("should create avatar when user is authenticated", async () => {
     const registerInput = { email: "test@email.com" }
     const { token, user } =
@@ -42,7 +42,7 @@ describe("createAvatar", () => {
 
     const response = await createClient({
       token,
-    }).createAvatar.mutate(avatarInput)
+    }).createAvatarInput.mutate(avatarInput)
 
     ok(response.avatar)
     partialDeepStrictEqual(response.avatar, {
@@ -60,7 +60,7 @@ describe("createAvatar", () => {
     }
 
     await rejects(
-      createClient().createAvatar.mutate(avatarInput),
+      createClient().createAvatarInput.mutate(avatarInput),
       partialRight(
         isMatchTRPCError,
         /authentication required/iu
